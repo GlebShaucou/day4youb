@@ -9,7 +9,7 @@ const PROMO_CODES_LOCAL_STORAGE = 'promoCodes';
 
 if (localStorage) {
 	const promoCodesFromStorage = localStorage.getItem(PROMO_CODES_LOCAL_STORAGE);
-	console.log('promoCodesFromStorage', JSON.parse(promoCodesFromStorage));
+
 	if (promoCodesFromStorage) {
 		promoCodesFromData = JSON.parse(promoCodesFromStorage);
 	} else {
