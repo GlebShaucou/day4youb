@@ -5,6 +5,7 @@ const promoCodes = [
 	    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut',
 	    src: 'http://i68.tinypic.com/zm1es0.jpg',
 	    alt: 'guitar',
+	    isOpen: false,
     },
 	{
 		code: 'QWERT1',
@@ -12,6 +13,7 @@ const promoCodes = [
 		description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut',
 		src: 'http://i67.tinypic.com/2ro4zn7.jpg',
 		alt: 'pottery',
+		isOpen: false,
 	},
 	{
 		code: 'QWERT2',
@@ -19,6 +21,7 @@ const promoCodes = [
 		description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut',
 		src: 'http://i68.tinypic.com/2hmcymd.jpg',
 		alt: 'wedding',
+		isOpen: false,
 	},
 	{
 		code: 'QWERT3',
@@ -26,6 +29,7 @@ const promoCodes = [
 		description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut',
 		src: 'http://i68.tinypic.com/zm1es0.jpg',
 		alt: 'guitar',
+		isOpen: false,
 	},
 	{
 		code: 'QWERT4',
@@ -33,6 +37,7 @@ const promoCodes = [
 		description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut',
 		src: 'http://i68.tinypic.com/zm1es0.jpg',
 		alt: 'guitar',
+		isOpen: false,
 	},
 	{
 		code: 'QWERT5',
@@ -40,6 +45,7 @@ const promoCodes = [
 		description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut',
 		src: 'http://i68.tinypic.com/zm1es0.jpg',
 		alt: 'guitar',
+		isOpen: false,
 	},
 ];
 

@@ -2,7 +2,20 @@ import React, { Component } from 'react';
 import data from '../../data-layer/data';
 import './App.css';
 
-const { promoCodes: promoCodesFromData, defaultPromo } = data;
+const { defaultPromo } = data;
+let promoCodesFromData = data.promoCodes;
+const localStorage = window.localStorage;
+const PROMO_CODES_LOCAL_STORAGE = 'promoCodes';
+
+if (localStorage) {
+	const promoCodesFromStorage = localStorage.getItem(PROMO_CODES_LOCAL_STORAGE);
+	console.log('promoCodesFromStorage', JSON.parse(promoCodesFromStorage));
+	if (promoCodesFromStorage) {
+		promoCodesFromData = JSON.parse(promoCodesFromStorage);
+	} else {
+		localStorage.setItem(PROMO_CODES_LOCAL_STORAGE, JSON.stringify(promoCodesFromData));
+	}
+}
 
 class App extends Component {
 	constructor(props) {
@@ -11,8 +24,7 @@ class App extends Component {
 		this.state = {
 			promoCode: '',
 			showPromoCodeDialog: false,
-			promoCodes: promoCodesFromData
-				.map((promo) => ({ ...promo, isOpen: false })),
+			promoCodes: promoCodesFromData,
 		};
 	}
 
@@ -64,6 +76,8 @@ class App extends Component {
 
 				return promo;
 			});
+
+			localStorage.setItem(PROMO_CODES_LOCAL_STORAGE, JSON.stringify(newPromos));
 
 			return {
 				showPromoCodeDialog: true,
@@ -158,11 +172,11 @@ class App extends Component {
 		}
 
 		const selectedPromo = promoCodes.find(({ code }) => code === promoCode);
-		let title = 'Invalid Promo';
-		let description = ' You have entered invalid promo code. Please, enter correct promo code.';
+		let title = 'Неверный промо-код';
+		let description = 'Вы ввели неверный промо-код. Проверьте введенные и попробуйте еще раз.';
 		let src = defaultPromo.src;
 		let alt = '';
-
+		console.log('selectedPromo', selectedPromo);
 		if (selectedPromo) {
 			({ title, description, src, alt } = selectedPromo)
 		}
