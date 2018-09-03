@@ -176,7 +176,7 @@ class App extends Component {
 		let description = 'Вы ввели неверный промо-код. Проверьте введенные и попробуйте еще раз.';
 		let src = defaultPromo.src;
 		let alt = '';
-		console.log('selectedPromo', selectedPromo);
+
 		if (selectedPromo) {
 			({ title, description, src, alt } = selectedPromo)
 		}
