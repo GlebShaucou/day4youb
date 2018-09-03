@@ -48,7 +48,7 @@
 }
 
 .promo-section__input {
-    width: 300px;
+    width: 380px;
     font-size: 5rem;
     color: #666666;
 }
@@ -128,4 +128,89 @@
 .navigation-item__link:hover {
     cursor: pointer;
     color: #fa5770;
+}
+
+.modal-dialog {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: 0.8;
+    background-color: #dedede;
+}
+
+.dialog-overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dialog {
+    position: absolute;
+    width: 520px;
+    min-height: 300px;
+    background-color: #ffffff;
+    border-radius: 2px;
+    box-shadow: 3px 3px 18px 1px rgba(0,0,0,0.75);
+}
+
+.dialog__header {
+    /*position: relative;*/
+}
+
+@keyframes rotate-close-icon {
+    0% {
+        transform: rotate(0);
+    }
+
+    100% {
+        transform: rotate(90deg);
+    }
+}
+
+.close-icon {
+    position: absolute;
+    right: 10px;
+    top: 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-icon:hover {
+    animation: rotate-close-icon 0.5s linear;
+}
+
+.close-icon:after {
+    content: '\00d7';
+    color: #442d3f;
+    font-size: 2rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.dialog__header {
+    padding: 10px 30px;
+    font-size: 2rem;
+    color: #442d3f;
+}
+
+.dialog__body-description {
+    padding: 10px 30px;
+    color: #666666;
+    font-size: 1.3rem;
 }

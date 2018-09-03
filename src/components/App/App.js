@@ -43,6 +43,12 @@ class App extends Component {
 		}
 	};
 
+	onCloseIconClick = () => {
+		this.setState({
+			showPromoCodeDialog: false,
+		});
+	};
+
 	renderArticles() {
 		const imagesForRender = Object.keys(images);
 
@@ -123,9 +129,35 @@ class App extends Component {
 			return null;
 		}
 
-		return (
-			<div className="">
+		const selectedPromo = promoCodes[promoCode];
+		let title = 'Invalid Promo';
+		let description = ' You have entered invalid promo code. Please, enter correct promo code.';
 
+		if (selectedPromo) {
+			({ title, description } = selectedPromo)
+		}
+
+		return (
+			<div className="modal-dialog">
+				<div className="modal-overlay" />
+				<div className="dialog-overlay">
+					<div className="dialog">
+						<div className="dialog__header">
+							<span className="dialog__header-text">
+								{title}
+							</span>
+						</div>
+						<div className="dialog__body">
+							<div className="dialog__body-description">
+								{description}
+							</div>
+						</div>
+						<span
+							onClick={this.onCloseIconClick}
+							className="close-icon"
+						/>
+					</div>
+				</div>
 			</div>
 		);
 	}
