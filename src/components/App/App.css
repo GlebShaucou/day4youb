@@ -170,7 +170,7 @@
 }
 
 .dialog__header {
-    /*position: relative;*/
+
 }
 
 @keyframes rotate-close-icon {
@@ -211,7 +211,7 @@
 }
 
 .dialog__body-description {
-    padding: 10px 30px;
+    padding: 10px 30px 30px;
     color: #666666;
     font-size: 1.3rem;
 }

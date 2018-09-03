@@ -47,7 +47,7 @@ const defaultPromo = {
 	title: 'Закрыто',
 	description: 'Введите промокод, чтобы открыть',
 	src: 'http://i66.tinypic.com/2yx3es1.jpg',
-	alt: 'guitar',
+	alt: 'Изображение кирпичной стены',
 };
 
 export default {

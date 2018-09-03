@@ -160,9 +160,11 @@ class App extends Component {
 		const selectedPromo = promoCodes.find(({ code }) => code === promoCode);
 		let title = 'Invalid Promo';
 		let description = ' You have entered invalid promo code. Please, enter correct promo code.';
+		let src = defaultPromo.src;
+		let alt = '';
 
 		if (selectedPromo) {
-			({ title, description } = selectedPromo)
+			({ title, description, src, alt } = selectedPromo)
 		}
 
 		return (
@@ -177,6 +179,7 @@ class App extends Component {
 						</div>
 						<div className="dialog__body">
 							<div className="dialog__body-description">
+								<img src={src} alt={alt} className="article__image" />
 								{description}
 							</div>
 						</div>
