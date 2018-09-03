@@ -5,6 +5,44 @@ import './App.css';
 const { promoCodes, images } = data;
 
 class App extends Component {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			promoCode: '',
+			showPromoCodeDialog: false,
+		};
+	}
+
+	onNavLinkClick = ({ linkId }) => (e) => {
+		e.preventDefault();
+
+		const elem = document.getElementById(linkId);
+		const rect = elem.getBoundingClientRect();
+		const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+		window.scrollTo({
+			top: rect.top + scrollTop,
+			behavior: "smooth"
+		});
+	};
+
+	onInputChange = (e) => {
+		const value = e.target.value;
+
+		this.setState({
+			promoCode: value,
+		});
+	};
+
+	onInputKeyPress = (e) => {
+		if (e.key === 'Enter') {
+			this.setState({
+				showPromoCodeDialog: true,
+			});
+		}
+	};
+
 	renderArticles() {
 		const imagesForRender = Object.keys(images);
 
@@ -31,35 +69,102 @@ class App extends Component {
 		});
 	}
 
+	renderNavigationSection() {
+		const navigationLinks = [
+			{
+				id: 'home',
+				name: 'Day4You',
+			},
+			{
+				id: 'promo',
+				name: 'Promo',
+			},
+			{
+				id: 'description',
+				name: 'Description',
+			},
+			{
+				id: 'contacts',
+				name: 'Contacts',
+			}
+		];
+
+		return (
+			<nav className="navigation-panel">
+				<div className="app-container">
+					<ul className="navigation-links">
+						{navigationLinks.map((link, index) => {
+							const { id, name } = link;
+
+							return (
+								<li
+									onClick={this.onNavLinkClick({ linkId: id })}
+									className="navigation-item"
+									key={index}>
+									<a className="navigation-item__link" target="_self" href={`#${id}`}>
+										{name}
+									</a>
+								</li>
+							);
+						})}
+					</ul>
+				</div>
+			</nav>
+		)
+	}
+
+	renderPromoCodeDialog() {
+		const {
+			promoCode,
+			showPromoCodeDialog,
+		} = this.state;
+
+		if (!showPromoCodeDialog) {
+			return null;
+		}
+
+		return (
+			<div className="">
+
+			</div>
+		);
+	}
+
 	render() {
+		const {
+			promoCode,
+		} = this.state;
+
 		return (
 			<div className="app">
 				<header className="app__header">
-					<div className="app-container">
-						<h1 className="header__title">Day 4 You</h1>
-					</div>
+					{this.renderNavigationSection()}
 				</header>
 				<main className="app__main">
-					<div className="title-section">
+					<div className="title-section" id="home">
 						<div className="app-container">
 							<h2 className="title-section__header">Day For You</h2>
 						</div>
 					</div>
-					<div className="promo-section">
+					<div className="promo-section" id="promo">
 						<div className="app-container">
 							<div className="promo-section__form">
-								<label className="promo-label" htmlFor="promo">
+								<label className="promo-label" htmlFor="promo-code-input">
 									Enter promo code here:
 								</label>
 								<input
-									id="promo"
+									value={promoCode}
+									id="promo-code-input"
 									className="promo-section__input"
 									type="text"
+									onChange={this.onInputChange}
+									onKeyPress={this.onInputKeyPress}
+									maxLength={8}
 								/>
 							</div>
 						</div>
 					</div>
-					<div className="project-description-section">
+					<div className="project-description-section" id="description">
 						<div className="app-container">
 							<div className="description-section">
 								<h3 className="description__title">
@@ -72,9 +177,12 @@ class App extends Component {
 						</div>
 					</div>
 				</main>
-				<footer className="app__footer">
-					footer
+				<footer className="app__footer" id="contacts">
+					<div className="app-container">
+						footer
+					</div>
 				</footer>
+				{this.renderPromoCodeDialog()}
 			</div>
 		);
 	}
