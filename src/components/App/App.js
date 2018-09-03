@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import data from '../../data-layer/data';
 import './App.css';
 
-const { promoCodes, images } = data;
+const { promoCodes: promoCodesFromData, defaultPromo } = data;
 
 class App extends Component {
 	constructor(props) {
@@ -11,6 +11,8 @@ class App extends Component {
 		this.state = {
 			promoCode: '',
 			showPromoCodeDialog: false,
+			promoCodes: promoCodesFromData
+				.map((promo) => ({ ...promo, isOpen: false })),
 		};
 	}
 
@@ -37,9 +39,7 @@ class App extends Component {
 
 	onInputKeyPress = (e) => {
 		if (e.key === 'Enter') {
-			this.setState({
-				showPromoCodeDialog: true,
-			});
+			this.getPromo();
 		}
 	};
 
@@ -49,17 +49,44 @@ class App extends Component {
 		});
 	};
 
-	renderArticles() {
-		const imagesForRender = Object.keys(images);
+	getPromo = () => {
+		this.setState((prevState) => {
+			const { promoCode, promoCodes } = prevState;
+			const newPromos = promoCodes.map((promo) => {
+				const { code } = promo;
 
-		return imagesForRender.map((imageName, index) => {
-			const image = images[imageName];
-			const {
-				title,
-				description,
-				src,
-				alt,
-			} = image;
+				if (code === promoCode) {
+					return {
+						...promo,
+						isOpen: true,
+					};
+				}
+
+				return promo;
+			});
+
+			return {
+				showPromoCodeDialog: true,
+				promoCodes: newPromos,
+			};
+		});
+	};
+
+	renderArticles() {
+		const { promoCodes } = this.state;
+
+		return promoCodes.map((promo, index) => {
+			const { isOpen } = promo;
+			let title;
+			let description;
+			let src;
+			let alt;
+
+			if (isOpen) {
+				({ title, description, src, alt } = promo);
+			} else {
+				({ title, description, src, alt } = defaultPromo);
+			}
 
 			return (
 				<div key={index} className="article">
@@ -83,15 +110,15 @@ class App extends Component {
 			},
 			{
 				id: 'promo',
-				name: 'Promo',
+				name: 'Вввести промо-код',
 			},
 			{
 				id: 'description',
-				name: 'Description',
+				name: 'Открытые промо-коды',
 			},
 			{
 				id: 'contacts',
-				name: 'Contacts',
+				name: 'О нас',
 			}
 		];
 
@@ -122,6 +149,7 @@ class App extends Component {
 	renderPromoCodeDialog() {
 		const {
 			promoCode,
+			promoCodes,
 			showPromoCodeDialog,
 		} = this.state;
 
@@ -129,7 +157,7 @@ class App extends Component {
 			return null;
 		}
 
-		const selectedPromo = promoCodes[promoCode];
+		const selectedPromo = promoCodes.find(({ code }) => code === promoCode);
 		let title = 'Invalid Promo';
 		let description = ' You have entered invalid promo code. Please, enter correct promo code.';
 
@@ -182,7 +210,7 @@ class App extends Component {
 						<div className="app-container">
 							<div className="promo-section__form">
 								<label className="promo-label" htmlFor="promo-code-input">
-									Enter promo code here:
+									Введите промо-код:
 								</label>
 								<input
 									value={promoCode}
@@ -193,6 +221,12 @@ class App extends Component {
 									onKeyPress={this.onInputKeyPress}
 									maxLength={8}
 								/>
+								<button
+									onClick={this.getPromo}
+									className="promo-button"
+								>
+									Посмотреть промо-код
+								</button>
 							</div>
 						</div>
 					</div>
@@ -200,7 +234,7 @@ class App extends Component {
 						<div className="app-container">
 							<div className="description-section">
 								<h3 className="description__title">
-									Day For You application description
+									Открытые промо-коды
 								</h3>
 								<div className="description__body">
 									{this.renderArticles()}
