@@ -17,14 +17,21 @@ if (localStorage) {
 	}
 }
 
+const VIEWPORT_DESKTOP = 'viewport-desktop';
+const VIEWPORT_MOBILE = 'viewport-mobile';
+
+const windowWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+const viewport = windowWidth > 650 ? VIEWPORT_DESKTOP : VIEWPORT_MOBILE;
+
 class App extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
 			promoCode: '',
-			showPromoCodeDialog: false,
 			promoCodes: promoCodesFromData,
+			showPromoCodeDialog: false,
+			showHamburgerMenu: false,
 		};
 	}
 
@@ -59,6 +66,12 @@ class App extends Component {
 		this.setState({
 			showPromoCodeDialog: false,
 		});
+	};
+
+	onHamburgerMenuClick = () => {
+		this.setState(({ showHamburgerMenu }) => ({
+			showHamburgerMenu: !showHamburgerMenu,
+		}));
 	};
 
 	getPromo = () => {
@@ -136,25 +149,48 @@ class App extends Component {
 			}
 		];
 
+		const navLinks = ({ classNames = [] }) => (
+			<ul className={`navigation-links ${classNames.join(' ')}`}>
+				{navigationLinks.map((link, index) => {
+					const { id, name } = link;
+
+					return (
+						<li
+							onClick={this.onNavLinkClick({ linkId: id })}
+							className="navigation-item"
+							key={index}>
+							<a className="navigation-item__link" target="_self" href={`#${id}`}>
+								{name}
+							</a>
+						</li>
+					);
+				})}
+			</ul>
+		);
+
+		if (viewport === VIEWPORT_MOBILE) {
+			const { showHamburgerMenu } = this.state;
+			const classNames = showHamburgerMenu ? ['navigation-links--expanded'] : [];
+
+			return (
+				<nav className="navigation-panel navigation-panel--mobile">
+					<button
+						className={`hamburger-menu ${showHamburgerMenu ? 'hamburger-menu--expanded' : ''}`}
+				        onClick={this.onHamburgerMenuClick}
+					>
+						<div className="bar1" />
+						<div className="bar2" />
+						<div className="bar3" />
+					</button>
+					{navLinks({ classNames })}
+				</nav>
+			);
+		}
+
 		return (
 			<nav className="navigation-panel">
 				<div className="app-container">
-					<ul className="navigation-links">
-						{navigationLinks.map((link, index) => {
-							const { id, name } = link;
-
-							return (
-								<li
-									onClick={this.onNavLinkClick({ linkId: id })}
-									className="navigation-item"
-									key={index}>
-									<a className="navigation-item__link" target="_self" href={`#${id}`}>
-										{name}
-									</a>
-								</li>
-							);
-						})}
-					</ul>
+					{navLinks()}
 				</div>
 			</nav>
 		)
@@ -193,8 +229,12 @@ class App extends Component {
 						</div>
 						<div className="dialog__body">
 							<div className="dialog__body-description">
-								<img src={src} alt={alt} className="article__image" />
-								{description}
+								<div className="dialog__image-container">
+									<img src={src} alt={alt} className="dialog__image" />
+								</div>
+								<p className="dialog__text">
+									{description}
+								</p>
 							</div>
 						</div>
 						<span
@@ -213,7 +253,7 @@ class App extends Component {
 		} = this.state;
 
 		return (
-			<div className="app">
+			<div className={`app ${viewport}`}>
 				<header className="app__header">
 					{this.renderNavigationSection()}
 				</header>
