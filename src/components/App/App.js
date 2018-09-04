@@ -149,7 +149,7 @@ class App extends Component {
 			}
 		];
 
-		const navLinks = ({ classNames = [] }) => (
+		const navLinks = ({ classNames = [] } = {}) => (
 			<ul className={`navigation-links ${classNames.join(' ')}`}>
 				{navigationLinks.map((link, index) => {
 					const { id, name } = link;
