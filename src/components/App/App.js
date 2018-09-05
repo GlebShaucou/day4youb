@@ -8,12 +8,16 @@ const localStorage = window.localStorage;
 const PROMO_CODES_LOCAL_STORAGE = 'promoCodes';
 
 if (localStorage) {
-	const promoCodesFromStorage = localStorage.getItem(PROMO_CODES_LOCAL_STORAGE);
+	try {
+		const promoCodesFromStorage = localStorage.getItem(PROMO_CODES_LOCAL_STORAGE);
 
-	if (promoCodesFromStorage) {
-		promoCodesFromData = JSON.parse(promoCodesFromStorage);
-	} else {
-		localStorage.setItem(PROMO_CODES_LOCAL_STORAGE, JSON.stringify(promoCodesFromData));
+		if (promoCodesFromStorage) {
+			promoCodesFromData = JSON.parse(promoCodesFromStorage);
+		} else {
+			localStorage.setItem(PROMO_CODES_LOCAL_STORAGE, JSON.stringify(promoCodesFromData));
+		}
+	} catch(error) {
+		console.log(error);
 	}
 }
 
@@ -90,7 +94,11 @@ class App extends Component {
 				return promo;
 			});
 
-			localStorage.setItem(PROMO_CODES_LOCAL_STORAGE, JSON.stringify(newPromos));
+			try {
+				localStorage.setItem(PROMO_CODES_LOCAL_STORAGE, JSON.stringify(newPromos));
+			} catch (error) {
+				console.log(error);
+			}
 
 			return {
 				showPromoCodeDialog: true,
