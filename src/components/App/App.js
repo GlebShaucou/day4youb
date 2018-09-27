@@ -152,7 +152,7 @@ class App extends Component {
 
 			return (
 				<div key={index} className="article" onClick={isOpen ? this.openPromoDialog(code) : () => {}}>
-					<img src={imageUrlsForPromo[src]} alt={alt} className="article__image" />
+					<img src={imageUrlsForPromo[src]} alt={alt} className={`article__image ${src === 'question' && 'article__image--fit'}`} />
 					<h4 className="article__title">
 						{title}
 					</h4>

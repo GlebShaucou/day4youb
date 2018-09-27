@@ -401,3 +401,7 @@
 .web-development a {
     color: #1e65b6;
 }
+
+.article__image--fit {
+    width: auto;
+}
